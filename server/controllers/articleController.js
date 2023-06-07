@@ -127,7 +127,7 @@ exports.unfavorite = async (req, res, next) => {
 		
 		if (favorite) { // 좋아요 처리한 게시물이 맞으면
 
-			await favorite.delete(); // 도큐먼트를 삭제한다
+			await favorite.deleteOne(); // 도큐먼트를 삭제한다
 
 			article.favoriteCount--; // 게시물의 좋아요 수를 1 감소시킨다
 			await article.save(); // 변경사항을 저장한다
