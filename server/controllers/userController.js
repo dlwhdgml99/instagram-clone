@@ -99,7 +99,87 @@ exports.create = [
 ];
 
 // 정보 수정 로직
-exports.update = []
+exports.update = [
+	fileHandler('profiles').single('avatar'), // 사진을 업로드했을 때
+	isValidUsername().custom(usernameInUse).optional(),
+	isValidEmail().custom(emailInUse).optional(),
+	async (req, res, next) => {
+		try {
+			const errors = validationResult(req);
+
+			if (!errors.isEmpty()) {
+				const err = new Error();
+				err.errors = errors.array();
+				err.status = 400;
+				throw err;
+			}
+
+			const _user = req.user; //req.user : user document
+
+			if (req.file) { // 파일이 있는 경우 user의 avatar(프로필 사진)을 업데이트 한다
+				_user.avatar = req.file.filename;
+			}
+
+			// user 객체 중에서 클라이언트가 요청한 속성만 업데이트한다
+			Object.assign(_user, req.body);
+
+			await _user.save(); // 변경사항을 저장한다
+
+			const token = _user.generateJWT(); // 토큰 재 생성
+
+			const user = {
+				username : _user.username,
+				email: _user.email,
+				fullName: _user.fullName,
+				avatar: _user.avatar,
+				bio: _user.bio,
+				token
+			}
+
+			res.json({ user })
+
+
+		} catch (error) {
+			next (error)
+		}
+	}
+]
 
 // 로그인 로직
-exports.login = [];
+exports.login = [
+	isValidEmail().custom(doesEmailExists),
+	isValidPassword().custom(doesPasswordMatch),
+	async (req, res, next) => {
+		try {
+
+			const errors = validationResult(req); // 유효성 검사 결과
+
+			if (!errors.isEmpty()) {
+				const err = new Error();
+				err.errors = errors.array();
+				err.status = 401; // Unauthorized (인증 실패)
+				throw err;
+			}
+			
+			const { email } = req.body;
+
+			const _user = await User.findOne({ email });
+
+			const token = _user.generateJWT(); // 로그인 토큰을 생성한다
+
+			const user = {
+				username : _user.username,
+				email: _user.email,
+				fullName: _user.fullName,
+				avatar: _user.avatar,
+				bio: _user.bio,
+				token
+			}
+
+			res.json({ user }) // 클라이언트에게 데이터 전송
+
+		} catch (error) {
+			next (error)
+		}
+	}
+];
