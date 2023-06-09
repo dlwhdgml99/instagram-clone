@@ -71,7 +71,7 @@ exports.findOne = async (req, res, next) => {
 				match: { follower: req.user._id } // 로그인 유저가 팔로우 중인 프로필인지 확인 가능
 			})
 
-		if (!profile) { // 프로필이 존재하지 않을 경우
+		if (!_profile) { // 프로필이 존재하지 않을 경우
 			const err = new Error("Profile not found");
 			err.status = 404;
 			throw err;
