@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AuthProvider from './components/AuthProvider';
+import AuthRequired from "./components/AuthRequired";
+import Layout from "./components/Layout";
+import Feed from "./components/Feed";
+import ArticleView from "./componentes/ArticleView";
+import Comments from "./components/Comments";
+import Search from "./components/Search";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import Profile from "./components/Profile";
+import FollowerList from "./components/FollowerList";
+import FollowingList from "./components/FollowingLIst";
+import Accounts from "./components/Accounts";
+import NotFound from "./components/NotFound";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={
+            <AuthRequired>
+              <Layout />
+            </AuthRequired>
+          }>
+            <Route index element={<Feed />}/>
+            <Route path="search" element={<Search />} />
+            <Route path="p/:id">
+              <Route index element={<ArticleView />} />
+              <Route path="comments" element={<Comments />} />
+            </Route>
+            <Route path="profiles/:username">
+              <Route index element={<Profile />} />
+              <Route path="followers" element={<FollowerList />} />
+              <Route path="followings" element={<FollowingList />} />
+            </Route>
+            <Route path="accounts/edit" element={<Accounts />} />
+          </Route>
+          <Route path="accounts/login" element={<Login />} />
+          <Route path="accounts/signup" element={<SignUp />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
+  )
 }
-
-export default App;
