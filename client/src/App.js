@@ -3,18 +3,19 @@ import AuthProvider from './components/AuthProvider';
 import AuthRequired from "./components/AuthRequired";
 import Layout from "./components/Layout";
 import Feed from "./components/Feed";
-import ArticleView from "./componentes/ArticleView";
+import ArticleView from "./components/ArticleView";
 import Comments from "./components/Comments";
 import Search from "./components/Search";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
 import FollowerList from "./components/FollowerList";
-import FollowingList from "./components/FollowingLIst";
+import FollowingList from "./components/FollowingList";
 import Accounts from "./components/Accounts";
 import NotFound from "./components/NotFound";
 
 export default function App() {
+
   return (
     <Router>
       <AuthProvider>
@@ -24,7 +25,7 @@ export default function App() {
               <Layout />
             </AuthRequired>
           }>
-            <Route index element={<Feed />}/>
+            <Route index element={<Feed />} />
             <Route path="search" element={<Search />} />
             <Route path="p/:id">
               <Route index element={<ArticleView />} />
@@ -33,7 +34,7 @@ export default function App() {
             <Route path="profiles/:username">
               <Route index element={<Profile />} />
               <Route path="followers" element={<FollowerList />} />
-              <Route path="followings" element={<FollowingList />} />
+              <Route path="following" element={<FollowingList />} />
             </Route>
             <Route path="accounts/edit" element={<Accounts />} />
           </Route>
