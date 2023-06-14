@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
@@ -25,7 +25,6 @@ userSchema.virtual('isFollowing', {
   justOne: true
 })
 
-
 // 토큰 생성 메서드
 userSchema.methods.generateJWT = function () {
   return jwt.sign({ username: this.username }, process.env.SECRET);
@@ -51,4 +50,4 @@ userSchema.methods.checkPassword = function (password) {
   return this.password === hashedPassword;
 }
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);
