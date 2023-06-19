@@ -20,7 +20,7 @@ export default function Timeline({ articles, articleCount }) {
 						{/* 좋아요 댓글 수 (hover했을 때 나타난다) */}
 						<div className='absolute inset-0 bg-black/[0.2] opacity-0 hover:opacity-100'>
 							<div className='flex flex-col justify-center h-full'>
-								<div className='flex justicy-center'>
+								<div className='flex justify-center'>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 512 512"

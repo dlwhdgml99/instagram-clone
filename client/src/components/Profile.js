@@ -34,14 +34,14 @@ export default function Profile() {
       })
       .catch(error => {
 		// NotFound 페이지로 이동한다
-        navigate('/notfound', { replace: true });
+        navigate("/notfound", { replace: true });
       })
 
   }, [username]);
 
   // 로그아웃 처리
   function handleSignOut() {
-    const confirmed = window.confirm('로그아웃 하시겠습니까?');
+    const confirmed = window.confirm("로그아웃 하시겠습니까?");
 
     if (confirmed) {
       setUser(null);
