@@ -51,8 +51,10 @@ export default function Profile() {
   // 팔로우 처리
   async function handleFollow() {
     try {
+      // 서버 요청
       await follow(username)
 
+      // profile 업데이트
       setProfile({ ...profile, isFollowing: true })
 
     } catch (error) {
@@ -63,8 +65,10 @@ export default function Profile() {
   // 언팔로우 처리
   async function handleUnfollow() {
     try {
+      // 서버 요청
       await unfollow(username)
 
+      // profile 업데이트
       setProfile({ ...profile, isFollowing: false });
 
     } catch (error) {
@@ -121,7 +125,7 @@ export default function Profile() {
                   className="ml-2 bg-gray-200 text-sm px-4 py-2 font-semibold p-2 rounded-lg"
                   onClick={handleUnfollow}
                 >
-                  Following
+                  팔로잉
                 </button>
               )}
 
