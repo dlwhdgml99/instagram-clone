@@ -24,4 +24,10 @@ export default function FollowerList() {
 	}, [])
 
 	console.log(followers)
+
+	// 팔로우 처리
+	async function handleFollow(username) {};
+
+	// 언팔로우 처리
+	async function handleUnfollow(username) {};
 }
